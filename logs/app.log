@@ -1,0 +1,127 @@
+2025-04-27 18:01:01,960 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 18:01:03,102 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 18:01:05,178 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-04-27 18:01:40,100 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 18:01:44,170 - ERROR - Application error: Cannot find empty port in range: 7861-7861. You can specify a different port by setting the GRADIO_SERVER_PORT environment variable or passing the `server_port` parameter to `launch()`.
+2025-04-27 18:04:05,876 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 18:04:06,931 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 18:04:08,988 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-04-27 18:23:08,772 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 18:23:12,837 - ERROR - Application error: Cannot find empty port in range: 7861-7861. You can specify a different port by setting the GRADIO_SERVER_PORT environment variable or passing the `server_port` parameter to `launch()`.
+2025-04-27 18:28:06,472 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 18:28:10,521 - ERROR - Application error: Cannot find empty port in range: 7861-7861. You can specify a different port by setting the GRADIO_SERVER_PORT environment variable or passing the `server_port` parameter to `launch()`.
+2025-04-27 18:29:19,141 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 18:29:23,240 - ERROR - Application error: Cannot find empty port in range: 7861-7861. You can specify a different port by setting the GRADIO_SERVER_PORT environment variable or passing the `server_port` parameter to `launch()`.
+2025-04-27 18:31:35,667 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 18:31:36,871 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 18:31:38,930 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-04-27 18:41:11,810 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 18:41:12,942 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 18:41:15,011 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-04-27 18:53:58,472 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 18:53:59,597 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 18:54:01,665 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-04-27 19:06:50,422 - ERROR - Application error: Image.__init__() got an unexpected keyword argument 'info'
+2025-04-27 19:06:51,460 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 19:08:06,582 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 19:08:07,738 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 19:08:09,806 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-04-27 19:29:40,686 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 19:29:41,796 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 19:29:43,865 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-04-27 19:33:53,087 - ERROR - Application error: local variable 'custom_styles' referenced before assignment
+2025-04-27 19:33:54,100 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 19:34:43,126 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 19:34:44,281 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 19:34:46,361 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-04-27 19:37:55,484 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 19:37:56,611 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 19:37:58,692 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-04-27 19:42:12,547 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 19:42:13,679 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 19:42:15,758 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-04-27 19:43:43,579 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 19:43:47,661 - ERROR - Application error: Cannot find empty port in range: 7861-7861. You can specify a different port by setting the GRADIO_SERVER_PORT environment variable or passing the `server_port` parameter to `launch()`.
+2025-04-27 19:43:59,781 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 19:44:00,950 - INFO - HTTP Request: GET http://localhost:7862/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 19:44:03,062 - INFO - HTTP Request: HEAD http://localhost:7862/ "HTTP/1.1 200 OK"
+2025-04-27 19:44:47,806 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 19:44:48,938 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 19:44:51,026 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-04-27 19:46:14,533 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 19:46:15,681 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 19:46:17,750 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-04-27 19:47:29,321 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 19:47:30,475 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 19:47:32,528 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-04-27 19:50:59,948 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 19:51:01,068 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 19:51:03,134 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-04-27 21:22:18,442 - ERROR - Application error: Cannot find empty port in range: 7861-7861. You can specify a different port by setting the GRADIO_SERVER_PORT environment variable or passing the `server_port` parameter to `launch()`.
+2025-04-27 21:22:19,423 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 21:43:03,731 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 21:43:04,530 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 21:43:06,597 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-04-27 21:57:02,719 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 21:57:03,839 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 21:57:05,892 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-04-27 22:00:42,652 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 22:00:43,790 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 22:00:45,848 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-04-27 22:07:36,856 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 22:07:38,000 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 22:07:40,097 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-04-27 22:36:02,438 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 22:36:03,473 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 22:36:05,599 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"
+2025-04-27 22:57:38,766 - INFO - Starting Comic Insights application
+2025-04-27 22:57:38,766 - INFO - Configuration validated successfully
+2025-04-27 22:57:38,811 - ERROR - Application error: 'ComicInsightsInterface' object has no attribute 'generator'
+2025-04-27 22:57:39,853 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 22:58:00,142 - INFO - Starting Comic Insights application
+2025-04-27 22:58:00,143 - INFO - Configuration validated successfully
+2025-04-27 22:58:00,189 - ERROR - Application error: 'list' object has no attribute 'keys'
+2025-04-27 22:58:01,230 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 22:58:45,655 - INFO - Starting Comic Insights application
+2025-04-27 22:58:45,655 - INFO - Configuration validated successfully
+2025-04-27 22:58:45,703 - ERROR - Application error: 'list' object has no attribute 'keys'
+2025-04-27 22:58:46,734 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 22:59:39,798 - INFO - Starting Comic Insights application
+2025-04-27 22:59:39,798 - INFO - Configuration validated successfully
+2025-04-27 22:59:39,845 - ERROR - Application error: 'list' object has no attribute 'keys'
+2025-04-27 22:59:40,832 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 23:01:14,493 - INFO - Starting Comic Insights application
+2025-04-27 23:01:14,493 - INFO - Configuration validated successfully
+2025-04-27 23:01:14,493 - INFO - Initializing ComicInsightsInterface
+2025-04-27 23:01:14,494 - INFO - ComicInsightsInterface initialized successfully
+2025-04-27 23:01:14,494 - INFO - Creating main interface
+2025-04-27 23:01:14,537 - ERROR - Failed to create main interface: 'list' object has no attribute 'keys'
+2025-04-27 23:01:14,538 - ERROR - Application error: 'list' object has no attribute 'keys'
+2025-04-27 23:01:15,558 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 23:02:08,404 - INFO - Starting Comic Insights application
+2025-04-27 23:02:08,404 - INFO - Configuration validated successfully
+2025-04-27 23:02:08,404 - INFO - Initializing ComicInsightsInterface
+2025-04-27 23:02:08,405 - INFO - ComicInsightsInterface initialized successfully
+2025-04-27 23:02:08,405 - INFO - Creating main interface
+2025-04-27 23:02:08,449 - ERROR - Failed to create main interface: 'list' object has no attribute 'keys'
+2025-04-27 23:02:08,449 - ERROR - Application error: 'list' object has no attribute 'keys'
+2025-04-27 23:02:09,435 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 23:04:52,964 - INFO - Starting Comic Insights application
+2025-04-27 23:04:52,965 - INFO - Configuration validated successfully
+2025-04-27 23:04:52,965 - INFO - Initializing ComicInsightsInterface
+2025-04-27 23:04:52,965 - INFO - ComicInsightsInterface initialized successfully
+2025-04-27 23:04:52,965 - INFO - Creating main interface
+2025-04-27 23:04:53,010 - ERROR - Failed to create main interface: 'list' object has no attribute 'keys'
+2025-04-27 23:04:53,010 - ERROR - Application error: 'list' object has no attribute 'keys'
+2025-04-27 23:04:54,032 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 23:08:47,805 - INFO - Starting Comic Insights application
+2025-04-27 23:08:47,805 - INFO - Configuration validated successfully
+2025-04-27 23:08:47,806 - INFO - Initializing ComicInsightsInterface
+2025-04-27 23:08:47,808 - INFO - ComicInsightsInterface initialized successfully
+2025-04-27 23:08:47,808 - INFO - Creating main interface
+2025-04-27 23:08:47,852 - ERROR - Failed to create main interface: 'list' object has no attribute 'keys'
+2025-04-27 23:08:47,852 - ERROR - Application error: 'list' object has no attribute 'keys'
+2025-04-27 23:08:48,895 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 23:13:01,982 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-04-27 23:13:03,059 - INFO - HTTP Request: GET http://localhost:7861/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-04-27 23:13:05,135 - INFO - HTTP Request: HEAD http://localhost:7861/ "HTTP/1.1 200 OK"

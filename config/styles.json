@@ -1,0 +1,66 @@
+{
+  "styles": [
+    {
+      "name": "Manga",
+      "lora": ["<lora:Epic-Manga-Panel-V1.0:1>"],
+      "prompt_add": "EMPILV1.0, manga, monochrome, greyscale, lazypos"
+    },
+    {
+      "name": "Western Comics",
+      "lora": [
+        "<lora:TTCSV1.0:0.67>",
+        "<lora:se_v1_epic_style:0.8>",
+        "<lora:Western_Comic_Art_Style_ILLUSTRIOUS_XL_by_UOC:0.7>"
+      ],
+      "prompt_add": "TTCSV1.0, w3st3rnc0m1c, westerncomic, western comic art style, lazypos"
+    },
+    {
+      "name": "Ghibli",
+      "lora": ["<lora:Ghibli_Harem_V1.0:1>"],
+      "prompt_add": "Ghibli styled, lazypos"
+    },
+    {
+      "name": "Noir",
+      "lora": ["<lora:dark_comic_fantasy_noir_illustriousXL:1>"],
+      "prompt_add": "dark_comic_fantasy_noir, lazypos"
+    },
+    {
+      "name": "Cyberpunk",
+      "lora": [],
+      "prompt_add": "cyberpunk, neon, futuristic, lazypos"
+    },
+    {
+      "name": "Retro Cartoon Style",
+      "lora": ["<lora:RetroToonXL_Style:0.75>"],
+      "prompt_add": "RetroXL, toon (style), flat color, black eyes, lazypos"
+    },
+    {
+      "name": "Disney",
+      "lora": ["<lora:Disney4:0.75>"],
+      "prompt_add": "disney 2d styled art, lazypos"
+    },
+    {
+      "name": "Disney Studios",
+      "lora": ["<lora:DisneyStudios_style:1>"],
+      "prompt_add": "DisneyStudioXL, cartoon, cinematic, lazypos"
+    },
+    {
+      "name": "Fantasy Comic",
+      "lora": ["<lora:Fantasy_Comic_-_IL:0.8>", "<lora:iLLMythM4gicalL1nes:0.4>"],
+      "prompt_add": "FCOMV1.0, M4gicalL1nes, fantasy art, lazypos"
+    }
+  ],
+  "default_cfg_scale": 7,
+  "api_endpoint": "http://localhost:7860/sdapi/v1/txt2img",
+  "stabilizer_lora": "<lora:illustriousXL_stabilizer_v1.93:0.5>",
+  "aspect_ratios": [
+    {"name": "Square (1:1)", "width": 512, "height": 512},
+    {"name": "Portrait (3:4)", "width": 576, "height": 768},
+    {"name": "Portrait (2:3)", "width": 512, "height": 768},
+    {"name": "Landscape (4:3)", "width": 768, "height": 576},
+    {"name": "Landscape (3:2)", "width": 768, "height": 512},
+    {"name": "Landscape (16:9)", "width": 1024, "height": 576},
+    {"name": "Portrait (9:16)", "width": 576, "height": 1024}
+  ],
+  "negative_embedding": "lazyneg"
+} 
