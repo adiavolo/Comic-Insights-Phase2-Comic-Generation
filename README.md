@@ -5,6 +5,11 @@ A web application for AI-powered comic page generation using Stable Diffusion.
 ## Features
 
 - Clean, minimal Gradio interface with integrated style and aspect ratio selection
+- **Multi-tab UI:**
+  - Plot/Story Setup (static placeholder, for entering story/scene context)
+  - Image Generation & Editing (fully functional, all previous features)
+  - Character Management (static placeholder, for future character roster)
+- Each tab provides unique, context-appropriate tips
 - Multiple art style options including Manga, Ghibli, and custom styles
 - Prompt-driven comic creation with style-specific enhancements
 - Image generation via AUTOMATIC1111/Forge Stable Diffusion API
@@ -12,6 +17,9 @@ A web application for AI-powered comic page generation using Stable Diffusion.
 - Export capabilities for images and session data
 - Customizable dimensions and aspect ratios
 - Negative prompt support for better image control
+- **Extensive logging and debugging:**
+  - Debug, info, and status logs for UI initialization, tab creation, and event handling
+  - Improved traceability for easier debugging and monitoring
 
 ## Prerequisites
 
@@ -23,8 +31,8 @@ A web application for AI-powered comic page generation using Stable Diffusion.
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd comic-insights
+git clone https://github.com/adiavolo/Comic-Insights-Phase2-Comic-Generation.git
+cd Comic-Insights-Phase2-Comic-Generation
 ```
 
 2. Create and activate a virtual environment:
@@ -53,25 +61,22 @@ pip install -r requirements.txt
 python main.py
 ```
 
-2. Open your web browser and navigate to `http://localhost:7862` (default port)
+2. Open your web browser and navigate to `http://localhost:7861` (default port)
 
-3. Use the interface to:
-   - Enter detailed scene descriptions
-   - Select base art style (e.g., Manga, Ghibli)
-   - Choose custom styles to enhance the generation
-   - Select aspect ratio and adjust dimensions
-   - Set CFG scale for prompt adherence
-   - Add negative prompts to avoid unwanted elements
-   - Generate and export comic pages
-   - View generation history
+3. Use the interface tabs:
+   - **Plot/Story Setup:** Enter your main comic prompt, story context, or page/scene summary (static placeholder for now)
+   - **Image Generation & Editing:** Enter scene description, select art/custom styles, aspect ratio, dimensions, CFG scale, negative prompts, generate/export images, and view history
+   - **Character Management:** (static placeholder) Will allow character roster management in the future
+
+4. Each tab provides unique tips relevant to its purpose.
 
 ## Project Structure
 
 ```
-comic-insights/
+Comic-Insights-Phase2-Comic-Generation/
 ├── main.py              # Application entry point
 ├── ui/
-│   ├── interface.py     # Gradio interface
+│   ├── interface.py     # Gradio interface (multi-tab UI, logging, tips)
 │   └── prompt_manager.py # Style and prompt management
 ├── backend/
 │   ├── img_api.py       # Image generation API
@@ -82,7 +87,7 @@ comic-insights/
 │   └── styles/
 │       └── styles_integrated_filtered.csv # Custom styles
 ├── export/              # Generated images and exports
-├── logs/                # Application logs
+├── logs/                # Application logs (debug, status, error)
 └── requirements.txt     # Python dependencies
 ```
 
@@ -107,6 +112,7 @@ Each style can include:
 - Gallery view for past generations
 - Style preview functionality
 - Batch generation capabilities
+- Full backend for Plot/Story Setup and Character Management tabs
 
 ## License
 

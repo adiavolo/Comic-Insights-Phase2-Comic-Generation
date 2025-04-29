@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 from backend import img_api, nlp_engine, session_manager
 from .prompt_manager import PromptManager
+import logging
 
 # Initialize backend components
 img_generator = img_api.ImageAPI()
@@ -79,110 +80,197 @@ def generate_comic(prompt, style_name, cfg_scale, negative_prompt, aspect_ratio_
     except Exception as e:
         raise gr.Error(f"Error generating comic: {str(e)}")
 
+def create_plot_story_tab():
+    """Create the Plot/Story Setup tab UI"""
+    logger = logging.getLogger('comic_insights.debug')
+    logger.debug("Initializing Plot/Story Setup tab UI.")
+    with gr.Tab("Plot/Story Setup"):
+        gr.Markdown("""
+        # Plot/Story Setup
+        Enter your story details and scene descriptions here.
+        """)
+        story_prompt = gr.Textbox(
+            label="Story Prompt",
+            placeholder="Enter your story prompt or scene description here...",
+            lines=6,
+            info="Describe your story or scene in detail."
+        )
+        generate_story_btn = gr.Button(
+            "Generate Story Summary",
+            interactive=False
+        )
+        story_output = gr.Textbox(
+            label="Story Summary",
+            placeholder="Confirmed story/page will appear here after backend is connected.",
+            lines=4,
+            interactive=False
+        )
+        # Unique tips for Plot/Story Setup
+        gr.Markdown("""
+        ---
+        **Tips:**
+        - Start with a clear summary of your comic's plot or scene.
+        - Include main characters and their motivations.
+        - Mention the setting and any important background details.
+        - Keep your description concise but vivid for best results.
+        """)
+        logger.info("Plot/Story Setup tab UI initialized.")
+    return story_prompt, generate_story_btn, story_output
+
+def create_character_management_tab():
+    """Create the Character Management tab UI"""
+    logger = logging.getLogger('comic_insights.debug')
+    logger.debug("Initializing Character Management tab UI.")
+    with gr.Tab("Character Management"):
+        gr.Markdown("""
+        # Character Management
+        Manage your comic characters and their appearances.
+        """)
+        add_character_btn = gr.Button(
+            "Add New Character",
+            interactive=False
+        )
+        character_list = gr.Markdown(
+            """
+            | Character Name | Description | Appearance |
+            |---------------|-------------|------------|
+            | Coming Soon   | Feature in development | - |
+            """,
+            label="Character List"
+        )
+        gr.Markdown("""
+        You will be able to add character appearance details for prompt consistency.
+        """)
+        # Unique tips for Character Management
+        gr.Markdown("""
+        ---
+        **Tips:**
+        - Add each character with a unique name and role.
+        - Describe their appearance, personality, and relationships.
+        - Use consistent details for recurring characters.
+        - Update the roster as your story evolves.
+        """)
+        logger.info("Character Management tab UI initialized.")
+    return add_character_btn, character_list
+
 def create_interface():
     """Create and return the Gradio interface"""
+    logger = logging.getLogger('comic_insights.debug')
+    status_logger = logging.getLogger('comic_insights.status')
+    logger.debug("Creating new session for Comic Insights UI.")
     # Create a new session
     session_id = session_mgr.create_session()
+    status_logger.info(f"Session created with ID: {session_id}")
     
     with gr.Blocks(title="Comic Insights") as demo:
         gr.Markdown("""
         # Comic Insights
-        Welcome to Comic Insights! Generate unique comic pages with AI-powered art and text. 
-        1. **Describe your scene** in detail for best results.
-        2. **Choose an art style** to set the visual mood.
-        3. **Select custom styles** to enhance your generation.
-        4. **Pick an aspect ratio** for your comic panel.
-        5. **Adjust size** for your comic panel.
-        6. **Fine-tune** with CFG scale and negative prompts.
-        7. **Export** your creations and view your session history.
+        Welcome to Comic Insights! Generate unique comic pages with AI-powered art and text.
         """)
-        with gr.Row():
-            with gr.Column():
-                gr.Markdown("## Comic Scene Setup")
-                prompt = gr.Textbox(
-                    label="Scene Description",
-                    placeholder="Describe your comic scene in detail... (e.g. A futuristic city at night, neon lights, two heroes in battle)",
-                    lines=4,
-                    info="The more detailed, the better the result!"
-                )
-                style_name = gr.Dropdown(
-                    choices=prompt_mgr.get_base_style_names(),
-                    label="Art Style",
-                    value=prompt_mgr.get_base_style_names()[0],
-                    info="Select the base art style for your comic page."
-                )
-                custom_styles = gr.Dropdown(
-                    choices=prompt_mgr.get_custom_style_names(),
-                    label="Custom Styles",
-                    value=None,
-                    multiselect=True,
-                    info="Select additional custom styles to enhance your generation."
-                )
-                aspect_ratio_name = gr.Dropdown(
-                    choices=prompt_mgr.get_aspect_ratio_names(),
-                    label="Aspect Ratio",
-                    value=prompt_mgr.get_aspect_ratio_names()[0],
-                    info="Select the aspect ratio for your comic page."
-                )
-                dim_type = gr.Radio(
-                    choices=["width", "height"],
-                    label="Dimension to set",
-                    value="width",
-                    info="Choose which dimension to set manually. The other will be calculated automatically."
-                )
-                custom_dim = gr.Number(
-                    label="Custom Dimension (px)",
-                    value=prompt_mgr.get_aspect_ratio(prompt_mgr.get_aspect_ratio_names()[0])['width'],
-                    precision=0,
-                    info="Set your preferred width or height in pixels (max 1536)."
-                )
-                cfg_scale = gr.Slider(
-                    minimum=1,
-                    maximum=20,
-                    value=7.5,
-                    step=0.5,
-                    label="CFG Scale",
-                    info="Higher values = more adherence to your prompt, lower = more creative freedom."
-                )
-                negative_prompt = gr.Textbox(
-                    label="Negative Prompt",
-                    placeholder="Things to avoid in the image (e.g. blurry, low quality, watermark)",
-                    lines=2,
-                    info="Optional: Add things you don't want in the image."
-                )
-                generate_btn = gr.Button("Generate Comic", elem_id="generate-btn")
+        logger.debug("Main Comic Insights UI loaded.")
+        
+        # Create tabs
+        with gr.Tabs():
+            # Tab 1: Plot/Story Setup
+            story_prompt, generate_story_btn, story_output = create_plot_story_tab()
+            logger.debug("Plot/Story Setup tab added to UI.")
             
-            with gr.Column():
-                gr.Markdown("## Output & History")
-                payload_display = gr.Textbox(
-                    label="API Payload",
-                    lines=6,
-                    interactive=False,
-                    info="Shows the exact payload sent to the Stable Diffusion API."
-                )
-                image = gr.Image(
-                    label="Generated Image",
-                    type="filepath"
-                )
-                history = gr.Dropdown(
-                    label="Generation History",
-                    choices=[],
-                    interactive=True,
-                    info="View your previous generations in this session."
-                )
-                
-                export_btn = gr.Button("Export Session", elem_id="export-btn")
+            # Tab 2: Image Generation & Editing (current implementation)
+            with gr.Tab("Image Generation & Editing"):
+                logger.debug("Initializing Image Generation & Editing tab UI.")
+                with gr.Row():
+                    with gr.Column():
+                        gr.Markdown("## Comic Scene Setup")
+                        prompt = gr.Textbox(
+                            label="Scene Description",
+                            placeholder="Describe your comic scene in detail... (e.g. A futuristic city at night, neon lights, two heroes in battle)",
+                            lines=4,
+                            info="The more detailed, the better the result!"
+                        )
+                        style_name = gr.Dropdown(
+                            choices=prompt_mgr.get_base_style_names(),
+                            label="Art Style",
+                            value=prompt_mgr.get_base_style_names()[0],
+                            info="Select the base art style for your comic page."
+                        )
+                        custom_styles = gr.Dropdown(
+                            choices=prompt_mgr.get_custom_style_names(),
+                            label="Custom Styles",
+                            value=None,
+                            multiselect=True,
+                            info="Select additional custom styles to enhance your generation."
+                        )
+                        aspect_ratio_name = gr.Dropdown(
+                            choices=prompt_mgr.get_aspect_ratio_names(),
+                            label="Aspect Ratio",
+                            value=prompt_mgr.get_aspect_ratio_names()[0],
+                            info="Select the aspect ratio for your comic page."
+                        )
+                        dim_type = gr.Radio(
+                            choices=["width", "height"],
+                            label="Dimension to set",
+                            value="width",
+                            info="Choose which dimension to set manually. The other will be calculated automatically."
+                        )
+                        custom_dim = gr.Number(
+                            label="Custom Dimension (px)",
+                            value=prompt_mgr.get_aspect_ratio(prompt_mgr.get_aspect_ratio_names()[0])['width'],
+                            precision=0,
+                            info="Set your preferred width or height in pixels (max 1536)."
+                        )
+                        cfg_scale = gr.Slider(
+                            minimum=1,
+                            maximum=20,
+                            value=7.5,
+                            step=0.5,
+                            label="CFG Scale",
+                            info="Higher values = more adherence to your prompt, lower = more creative freedom."
+                        )
+                        negative_prompt = gr.Textbox(
+                            label="Negative Prompt",
+                            placeholder="Things to avoid in the image (e.g. blurry, low quality, watermark)",
+                            lines=2,
+                            info="Optional: Add things you don't want in the image."
+                        )
+                        generate_btn = gr.Button("Generate Comic", elem_id="generate-btn")
+                    
+                    with gr.Column():
+                        gr.Markdown("## Output & History")
+                        payload_display = gr.Textbox(
+                            label="API Payload",
+                            lines=6,
+                            interactive=False,
+                            info="Shows the exact payload sent to the Stable Diffusion API."
+                        )
+                        image = gr.Image(
+                            label="Generated Image",
+                            type="filepath"
+                        )
+                        history = gr.Dropdown(
+                            label="Generation History",
+                            choices=[],
+                            interactive=True,
+                            info="View your previous generations in this session."
+                        )
+                        
+                        export_btn = gr.Button("Export Session", elem_id="export-btn")
+                # Unique tips for Image Generation & Editing
+                gr.Markdown("""
+                ---
+                **Tips:**
+                - Try different art styles and custom style combinations for variety.
+                - Use negative prompts to filter out unwanted elements.
+                - Export your session to save your work.
+                - For best results, keep dimensions under 1536px.
+                """)
+                logger.info("Image Generation & Editing tab UI initialized.")
+            
+            # Tab 3: Character Management
+            add_character_btn, character_list = create_character_management_tab()
+            logger.debug("Character Management tab added to UI.")
         
-        gr.Markdown("""
-        ---
-        **Tips:**
-        - Try different art styles and custom style combinations for variety.
-        - Use negative prompts to filter out unwanted elements.
-        - Export your session to save your work.
-        - For best results, keep dimensions under 1536px.
-        """)
-        
-        # Set up event handlers
+        # Set up event handlers for image generation tab
+        logger.debug("Setting up event handlers for image generation tab.")
         generate_btn.click(
             fn=generate_comic,
             inputs=[prompt, style_name, cfg_scale, negative_prompt, aspect_ratio_name, custom_dim, dim_type, custom_styles, gr.State(session_id)],
@@ -193,5 +281,6 @@ def create_interface():
             fn=lambda: session_mgr.export_session(session_id),
             outputs=gr.File(label="Exported Session")
         )
+        logger.info("Comic Insights UI fully initialized and ready.")
     
     return demo 
