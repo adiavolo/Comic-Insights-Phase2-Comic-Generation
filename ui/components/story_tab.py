@@ -25,6 +25,8 @@ from dataclasses import dataclass
 from ..utils.logging_utils import ComponentLogger
 from ..utils.status_tracker import track_status
 from backend import nlp_engine
+from .summary_refinement import SummaryRefinement
+from core.prompt.summary_refinement import INITIAL_SUMMARY_PROMPT
 
 logger = ComponentLogger(__name__)
 
@@ -137,26 +139,34 @@ class StoryTab:
             raise RuntimeError("Components not created. Call create() first.")
         
         story_prompt, story_summary_btn, story_output = self.components
+        
+        # Handle initial summary generation
+        def single_output_summary(user_input):
+            summary, _ = self._generate_initial_summary(user_input)
+            return summary
         story_summary_btn.click(
-            fn=generate_story_summary,
-            inputs=[story_prompt, gr.Textbox(label="Context", lines=2, optional=True)],
-            outputs=story_output
+            fn=single_output_summary,
+            inputs=[story_prompt],
+            outputs=[story_output]
         )
-        logger.debug("Story summary button handler attached.")
+        
+        logger.debug("Story tab handlers attached.")
 
-def generate_story_summary(user_input, context_input):
-    """Generate a story summary using the backend NLP engine.
-    
-    Args:
-        user_input (str): The user's story prompt.
-        context_input (str): Optional additional context.
-    
-    Returns:
-        str: The generated story summary or an error message.
-    """
-    if not user_input.strip():
-        return "Please enter a valid story prompt."
-    logger.debug("Calling backend to generate story summary...")
-    summary = nlp_engine.generate_summary(user_input, context_input or None)
-    logger.debug("Story summary generated: %s", summary)
-    return summary 
+    def _generate_initial_summary(self, user_input: str) -> tuple:
+        """Generate initial story summary using the backend NLP engine.
+        
+        Args:
+            user_input (str): The user's story prompt.
+        
+        Returns:
+            tuple: (summary, summary) for output and editor
+        """
+        if not user_input.strip():
+            return ("Please enter a valid story prompt.", "")
+        
+        logger.debug("Calling backend to generate story summary...")
+        summary = nlp_engine.process_prompt(
+            INITIAL_SUMMARY_PROMPT.format(prompt=user_input)
+        )
+        logger.debug("Story summary generated: %s", summary)
+        return (summary, summary) 

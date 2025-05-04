@@ -7,6 +7,7 @@ import gradio as gr
 import sys
 import psutil
 import platform
+from backend import nlp_engine, session_manager
 
 def get_system_info() -> dict:
     """Get detailed system information for logging"""
@@ -37,8 +38,13 @@ def setup_environment():
         if not os.path.exists(directory):
             os.makedirs(directory)
             logging.getLogger('comic_insights.debug').debug(f"Created directory: {directory}")
+    
+    # Initialize backend components
+    nlp_engine.initialize()
+    # Session manager is already initialized in __init__.py
 
 def main():
+    start_time = None  # Initialize start_time at the beginning
     try:
         # Set up environment and logging
         setup_environment()
@@ -46,7 +52,7 @@ def main():
         status_logger = logging.getLogger('comic_insights.status')
         error_logger = logging.getLogger('comic_insights.error')
         
-        start_time = datetime.now()
+        start_time = datetime.now()  # Set start_time after successful setup
         logger.info("Starting Comic Insights application")
         
         # Get system information
@@ -140,31 +146,32 @@ def main():
         raise
     finally:
         # Log application shutdown if we get here
-        end_time = datetime.now()
-        duration = (end_time - start_time).total_seconds()
-        
-        try:
-            memory_usage = psutil.Process().memory_info().rss
-        except:
-            memory_usage = 'N/A'
-        
-        status_logger = logging.getLogger('comic_insights.status')
-        status_logger.info(
-            "Application shutdown",
-            extra={
-                'status_data': {
-                    'end_time': end_time.isoformat(),
-                    'duration': duration,
-                    'shutdown_type': 'clean' if 'e' not in locals() else 'error',
-                    'memory_usage': memory_usage,
-                    'system_status': {
-                        'cpu_percent': psutil.cpu_percent(),
-                        'memory_percent': psutil.virtual_memory().percent,
-                        'disk_usage': psutil.disk_usage('/').percent
+        if start_time:  # Only calculate duration if start_time was set
+            end_time = datetime.now()
+            duration = (end_time - start_time).total_seconds()
+            
+            try:
+                memory_usage = psutil.Process().memory_info().rss
+            except:
+                memory_usage = 'N/A'
+            
+            status_logger = logging.getLogger('comic_insights.status')
+            status_logger.info(
+                "Application shutdown",
+                extra={
+                    'status_data': {
+                        'end_time': end_time.isoformat(),
+                        'duration': duration,
+                        'shutdown_type': 'clean' if 'e' not in locals() else 'error',
+                        'memory_usage': memory_usage,
+                        'system_status': {
+                            'cpu_percent': psutil.cpu_percent(),
+                            'memory_percent': psutil.virtual_memory().percent,
+                            'disk_usage': psutil.disk_usage('/').percent
+                        }
                     }
                 }
-            }
-        )
+            )
 
 if __name__ == "__main__":
     main() 
