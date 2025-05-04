@@ -97,7 +97,7 @@ def create_plot_story_tab():
         )
         generate_story_btn = gr.Button(
             "Generate Story Summary",
-            interactive=False
+            interactive=True
         )
         story_output = gr.Textbox(
             label="Story Summary",
@@ -105,6 +105,8 @@ def create_plot_story_tab():
             lines=4,
             interactive=False
         )
+        # Notification output
+        story_notify = gr.Markdown(visible=True)
         # Unique tips for Plot/Story Setup
         gr.Markdown("""
         ---
@@ -115,6 +117,33 @@ def create_plot_story_tab():
         - Keep your description concise but vivid for best results.
         """)
         logger.info("Plot/Story Setup tab UI initialized.")
+
+        def on_generate_story_summary(prompt):
+            logger = logging.getLogger('comic_insights.debug')
+            logger.info("Story summary generation started.")
+            print("[INFO] Story summary generation started.")
+            notify_msg = "<span style='color:orange'>Generating summary...</span>"
+            # Show notification immediately
+            try:
+                from backend import nlp_engine
+                logger.debug(f"Calling nlp_engine.generate_summary with prompt: {prompt}")
+                print(f"[DEBUG] Calling nlp_engine.generate_summary with prompt: {prompt}")
+                summary = nlp_engine.generate_summary(prompt, None)
+                notify_msg = "<span style='color:green'>Summary generated!</span>"
+                logger.info("Story summary successfully generated.")
+                print("[INFO] Story summary successfully generated.")
+                return summary, notify_msg
+            except Exception as e:
+                notify_msg = f"<span style='color:red'>Error: {str(e)}</span>"
+                logger.error(f"Error generating story summary: {str(e)}")
+                print(f"[ERROR] Error generating story summary: {str(e)}")
+                return "Error generating summary.", notify_msg
+
+        generate_story_btn.click(
+            fn=on_generate_story_summary,
+            inputs=[story_prompt],
+            outputs=[story_output, story_notify]
+        )
     return story_prompt, generate_story_btn, story_output
 
 def create_character_management_tab():

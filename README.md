@@ -25,7 +25,29 @@ A web application for AI-powered comic page generation using Stable Diffusion.
 
 - Python 3.8 or higher
 - AUTOMATIC1111/Forge Stable Diffusion web UI running locally
+- [Ollama](https://ollama.com/) installed and running locally (for story summary generation)
+- Gemma3:12b model pulled in Ollama (`ollama pull gemma3:12b`)
 - Virtual environment (recommended)
+
+## Ollama Integration (Story Summary Generation)
+
+This project now supports local LLM-powered story summary generation using [Ollama](https://ollama.com/) and the Gemma3:12b model.
+
+### Setup
+1. [Download and install Ollama](https://ollama.com/download) for your platform.
+2. Start the Ollama server:
+   ```bash
+   ollama serve
+   ```
+3. Pull the required model:
+   ```bash
+   ollama pull gemma3:12b
+   ```
+
+### Usage
+When you use the "Plot/Story Setup" tab, your story prompt will be summarized by the local Gemma3:12b model via Ollama. No internet connection is required for LLM inference.
+
+If you encounter a model not found error, ensure you have pulled the correct model (`gemma3:12b`) and that Ollama is running.
 
 ## Installation
 
@@ -80,7 +102,7 @@ Comic-Insights-Phase2-Comic-Generation/
 │   └── prompt_manager.py # Style and prompt management
 ├── backend/
 │   ├── img_api.py       # Image generation API
-│   ├── nlp_engine.py    # Text generation (placeholder)
+│   ├── nlp_engine.py    # Text generation (Ollama integration for story summary)
 │   └── session_manager.py # Session management
 ├── config/
 │   ├── styles.json      # Base styles and aspect ratios
@@ -105,8 +127,7 @@ Each style can include:
 
 ## Future Enhancements
 
-- Integration with NLP models for plot generation
-- Dialogue generation capabilities
+- Dialogue generation capabilities (via LLM)
 - Multi-user support
 - Advanced export options
 - Gallery view for past generations
