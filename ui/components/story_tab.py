@@ -24,6 +24,7 @@ from typing import Tuple
 from dataclasses import dataclass
 from ..utils.logging_utils import ComponentLogger
 from ..utils.status_tracker import track_status
+from backend import nlp_engine
 
 logger = ComponentLogger(__name__)
 
@@ -95,7 +96,7 @@ class StoryTab:
                 # Control section
                 story_summary_btn = gr.Button(
                     "Generate Story Summary",
-                    interactive=False,  # Will be enabled with backend
+                    interactive=True,  # Enable the button
                     variant="secondary"
                 )
                 
@@ -135,5 +136,27 @@ class StoryTab:
         if not self.components:
             raise RuntimeError("Components not created. Call create() first.")
         
-        # Future handler implementation will go here
-        pass 
+        story_prompt, story_summary_btn, story_output = self.components
+        story_summary_btn.click(
+            fn=generate_story_summary,
+            inputs=[story_prompt, gr.Textbox(label="Context", lines=2, optional=True)],
+            outputs=story_output
+        )
+        logger.debug("Story summary button handler attached.")
+
+def generate_story_summary(user_input, context_input):
+    """Generate a story summary using the backend NLP engine.
+    
+    Args:
+        user_input (str): The user's story prompt.
+        context_input (str): Optional additional context.
+    
+    Returns:
+        str: The generated story summary or an error message.
+    """
+    if not user_input.strip():
+        return "Please enter a valid story prompt."
+    logger.debug("Calling backend to generate story summary...")
+    summary = nlp_engine.generate_summary(user_input, context_input or None)
+    logger.debug("Story summary generated: %s", summary)
+    return summary 
