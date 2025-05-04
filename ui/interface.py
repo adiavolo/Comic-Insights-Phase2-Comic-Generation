@@ -7,8 +7,8 @@ import logging
 
 # Initialize backend components
 img_generator = img_api.ImageAPI()
-nlp = nlp_engine.NLPEngine()
-session_mgr = session_manager.SessionManager()
+nlp = nlp_engine  # Use the singleton instance from backend/__init__.py
+session_mgr = session_manager  # Use the singleton instance from backend/__init__.py
 
 # Initialize prompt manager
 prompt_mgr = PromptManager('config/styles.json', 'styles_integrated_filtered.csv')
@@ -84,29 +84,27 @@ def create_plot_story_tab():
     """Create the Plot/Story Setup tab UI"""
     logger = logging.getLogger('comic_insights.debug')
     logger.debug("Initializing Plot/Story Setup tab UI.")
+    
+    from .components.story_tab import StoryTab
+    from .components.summary_refinement import SummaryRefinement
+    
     with gr.Tab("Plot/Story Setup"):
         gr.Markdown("""
         # Plot/Story Setup
         Enter your story details and scene descriptions here.
         """)
-        story_prompt = gr.Textbox(
-            label="Story Prompt",
-            placeholder="Enter your story prompt or scene description here...",
-            lines=6,
-            info="Describe your story or scene in detail."
-        )
-        generate_story_btn = gr.Button(
-            "Generate Story Summary",
-            interactive=True
-        )
-        story_output = gr.Textbox(
-            label="Story Summary",
-            placeholder="Confirmed story/page will appear here after backend is connected.",
-            lines=4,
-            interactive=False
-        )
+        
+        # Initialize our components
+        story_tab = StoryTab()
+        story_prompt, generate_story_btn, story_output = story_tab.create()
+        
+        # Create the summary refinement section (only once)
+        summary_refinement = SummaryRefinement()
+        summary_editor, instruction_input, refine_btn, confirm_btn, status_message, proceed_btn = summary_refinement.create()
+        
         # Notification output
         story_notify = gr.Markdown(visible=True)
+        
         # Unique tips for Plot/Story Setup
         gr.Markdown("""
         ---
@@ -115,36 +113,26 @@ def create_plot_story_tab():
         - Include main characters and their motivations.
         - Mention the setting and any important background details.
         - Keep your description concise but vivid for best results.
+        - Use the refinement tools to polish your story summary.
         """)
         logger.info("Plot/Story Setup tab UI initialized.")
-
-        def on_generate_story_summary(prompt):
-            logger = logging.getLogger('comic_insights.debug')
-            logger.info("Story summary generation started.")
-            print("[INFO] Story summary generation started.")
-            notify_msg = "<span style='color:orange'>Generating summary...</span>"
-            # Show notification immediately
-            try:
-                from backend import nlp_engine
-                logger.debug(f"Calling nlp_engine.generate_summary with prompt: {prompt}")
-                print(f"[DEBUG] Calling nlp_engine.generate_summary with prompt: {prompt}")
-                summary = nlp_engine.generate_summary(prompt, None)
-                notify_msg = "<span style='color:green'>Summary generated!</span>"
-                logger.info("Story summary successfully generated.")
-                print("[INFO] Story summary successfully generated.")
-                return summary, notify_msg
-            except Exception as e:
-                notify_msg = f"<span style='color:red'>Error: {str(e)}</span>"
-                logger.error(f"Error generating story summary: {str(e)}")
-                print(f"[ERROR] Error generating story summary: {str(e)}")
-                return "Error generating summary.", notify_msg
-
+        
+        # Attach handlers
+        story_tab.attach_handlers()
+        summary_refinement.attach_handlers()
+        
+        # When the summary is generated, update both the output and the summary editor
+        def update_summary_and_editor(user_input):
+            summary, _ = story_tab._generate_initial_summary(user_input)
+            summary_refinement._skip_next_change = True
+            return summary, summary
         generate_story_btn.click(
-            fn=on_generate_story_summary,
+            fn=update_summary_and_editor,
             inputs=[story_prompt],
-            outputs=[story_output, story_notify]
+            outputs=[story_output, summary_editor]
         )
-    return story_prompt, generate_story_btn, story_output
+        
+    return story_prompt, generate_story_btn, story_output, summary_editor
 
 def create_character_management_tab():
     """Create the Character Management tab UI"""
@@ -201,7 +189,7 @@ def create_interface():
         # Create tabs
         with gr.Tabs():
             # Tab 1: Plot/Story Setup
-            story_prompt, generate_story_btn, story_output = create_plot_story_tab()
+            story_prompt, generate_story_btn, story_output, summary_editor = create_plot_story_tab()
             logger.debug("Plot/Story Setup tab added to UI.")
             
             # Tab 2: Image Generation & Editing (current implementation)

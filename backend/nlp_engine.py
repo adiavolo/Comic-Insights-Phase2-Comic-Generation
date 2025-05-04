@@ -6,8 +6,43 @@ logger = logging.getLogger('comic_insights.debug')
 
 class NLPEngine:
     def __init__(self):
-        # Placeholder for future NLP model initialization
-        pass
+        """Initialize the NLP engine"""
+        self.initialized = False
+        self.model = None
+
+    def initialize(self):
+        """Initialize the NLP engine and its components"""
+        if not self.initialized:
+            try:
+                # Initialize Ollama client
+                self.model = 'gemma3:12b'  # Default model
+                self.initialized = True
+                logger.info("NLP Engine initialized successfully")
+            except Exception as e:
+                logger.error(f"Failed to initialize NLP Engine: {str(e)}")
+                raise
+
+    def process_prompt(self, prompt: str) -> str:
+        """Process a prompt using the NLP engine
+        
+        Args:
+            prompt (str): The prompt to process
+            
+        Returns:
+            str: The processed response
+        """
+        if not self.initialized:
+            self.initialize()
+            
+        try:
+            response = ollama.generate(
+                model=self.model,
+                prompt=prompt
+            )
+            return response['response'].strip()
+        except Exception as e:
+            logger.error(f"Error processing prompt: {str(e)}")
+            raise
 
     def generate_plot(self, prompt):
         """
