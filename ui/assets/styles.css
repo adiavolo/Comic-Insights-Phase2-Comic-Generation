@@ -1,0 +1,179 @@
+/* Summary Refinement Component Styles */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#summary-refinement-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+#summary-refinement-heading {
+    margin-bottom: 8px !important;
+    color: #2c3e50;
+}
+
+#summary-refinement-desc {
+    margin-bottom: 24px !important;
+}
+
+/* Summary Editor Group */
+#summary-editor-group {
+    padding: 16px;
+    margin-bottom: 24px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+#summary-editor-label {
+    margin-bottom: 8px !important;
+    color: #2c3e50;
+}
+
+#summary-editor {
+    min-height: 200px;
+    max-height: 400px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1em;
+    line-height: 1.6;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+    transition: border-color 0.2s ease;
+    resize: vertical;
+    overflow-y: auto;
+}
+
+#summary-editor:focus {
+    border-color: #2d8cff;
+    box-shadow: 0 0 0 2px rgba(45, 140, 255, 0.1);
+}
+
+/* Instruction Group */
+#instruction-group {
+    padding: 16px;
+    margin-bottom: 24px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+#instruction-label {
+    margin-bottom: 8px !important;
+    color: #2c3e50;
+}
+
+#instruction-input {
+    min-height: 60px;
+    max-height: 120px;
+    font-family: 'Inter', sans-serif;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+    transition: border-color 0.2s ease;
+    resize: vertical;
+    overflow-y: auto;
+}
+
+#instruction-input:focus {
+    border-color: #2d8cff;
+    box-shadow: 0 0 0 2px rgba(45, 140, 255, 0.1);
+}
+
+/* Control Buttons */
+#control-buttons-row {
+    margin-bottom: 24px;
+    gap: 12px;
+}
+
+#refine-btn, #confirm-btn {
+    padding: 10px 24px;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+#refine-btn {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+}
+
+#refine-btn:hover {
+    background: #e9ecef;
+}
+
+#confirm-btn {
+    background: #2d8cff;
+    color: white;
+    border: none;
+}
+
+#confirm-btn:hover {
+    background: #1a7ae6;
+    transform: translateY(-1px);
+}
+
+/* Status Message */
+#status-message {
+    margin: 16px 0;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+/* Proceed Button */
+#proceed-btn {
+    width: 100%;
+    padding: 12px 24px;
+    font-size: 1.1em;
+    font-weight: 500;
+    background: #2ecc40;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    margin-top: 24px;
+    transition: all 0.2s ease;
+}
+
+#proceed-btn:hover {
+    background: #25a334;
+    transform: translateY(-1px);
+}
+
+/* Word Count */
+#word-count {
+    margin-top: 8px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #summary-refinement-container {
+        padding: 16px;
+    }
+    
+    #summary-editor, #instruction-input {
+        font-size: 1em;
+    }
+    
+    #control-buttons-row {
+        flex-direction: column;
+    }
+    
+    #refine-btn, #confirm-btn {
+        width: 100%;
+    }
+} 
