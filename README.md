@@ -141,4 +141,80 @@ Each style can include:
 
 ## Contributing
 
-[Your contribution guidelines] 
+[Your contribution guidelines]
+
+## Character Management System
+
+The Character Management System provides a comprehensive solution for managing comic characters, from extraction to final confirmation.
+
+### Features
+
+- **LLM-Driven Character Extraction**: Automatically extracts characters from story summaries
+- **Session-Based Storage**: Maintains character data per project session
+- **Editable Character Fields**: 
+  - Name
+  - Role/Personality
+  - Natural Language Appearance
+  - Booru-style Visual Tags
+- **Character Roster Management**:
+  - Add/Remove characters
+  - Edit all fields
+  - Regenerate visual tags
+  - Confirm final roster
+- **Export & Integration**: Saves confirmed characters for scene/image generation
+
+### Usage
+
+1. **Character Extraction**:
+   - Paste the confirmed story summary
+   - Click "Extract Characters"
+   - Review and edit extracted characters
+
+2. **Character Management**:
+   - Edit character details as needed
+   - Add new characters manually
+   - Delete unwanted characters
+   - Regenerate visual tags if needed
+
+3. **Roster Confirmation**:
+   - Review all characters
+   - Click "Confirm Roster" to lock the roster
+   - Status changes from 🟡 Editable to ✅ Confirmed
+
+### Development
+
+#### Running Tests
+```bash
+python -m pytest tests/test_character_management.py -v
+```
+
+#### Code Style
+```bash
+black .
+isort .
+mypy .
+```
+
+### Architecture
+
+- **Backend**: `character_manager.py`
+  - Session-based storage
+  - CRUD operations
+  - Export functionality
+
+- **UI**: `character_tab.py`
+  - Gradio-based interface
+  - Real-time updates
+  - Status tracking
+
+### Logging
+
+The system uses Python's built-in logging with the following levels:
+- INFO: General operations
+- WARNING: Non-critical issues
+- ERROR: Critical failures
+
+Logs are formatted as:
+```
+timestamp - module - level - message
+``` 

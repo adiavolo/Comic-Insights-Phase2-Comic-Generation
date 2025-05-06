@@ -38,10 +38,12 @@ class SummaryRefinement:
     supporting both manual edits and instruction-based refinement.
     """
     
-    def __init__(self, config: SummaryRefinementConfig = None):
+    def __init__(self, character_manager=None, session_id=None, config: SummaryRefinementConfig = None):
         """Initialize Summary Refinement with optional custom configuration
         
         Args:
+            character_manager (CharacterManager, optional): The character manager for session management
+            session_id (str, optional): The session ID for session management
             config (SummaryRefinementConfig, optional): Custom configuration for the component.
                 If not provided, uses default configuration.
         """
@@ -51,6 +53,8 @@ class SummaryRefinement:
         self._last_llm_output = None
         self._is_final = False
         self._skip_next_change = False
+        self.character_manager = character_manager
+        self.session_id = session_id
     
     @track_status("SummaryRefinement")
     def create(self) -> Tuple[gr.Textbox, gr.Textbox, gr.Button, gr.Button, gr.Markdown, gr.Button]:
@@ -179,7 +183,7 @@ class SummaryRefinement:
         
         # Handle final confirmation (now clears and disables instruction input)
         confirm_btn.click(
-            fn=self._handle_final_confirmation,
+            fn=lambda summary, instruction: self._handle_final_confirmation_and_extract(summary, instruction),
             inputs=[summary_editor, instruction_input],
             outputs=[summary_editor, instruction_input, status_message, refine_btn, confirm_btn, proceed_btn]
         )
@@ -208,21 +212,27 @@ class SummaryRefinement:
         self._last_llm_output = refined
         return refined
     
-    def _handle_final_confirmation(self, current_summary: str, instruction: str):
-        """Handle final draft confirmation
-        
-        Args:
-            current_summary (str): The current state of the summary
-            instruction (str): The refinement instruction (ignored)
-        
-        Returns:
-            tuple: (corrected_summary, cleared_and_disabled_instruction_input, status_message, hide_refine_btn, hide_confirm_btn, show_proceed_btn)
-        """
+    def _handle_final_confirmation_and_extract(self, current_summary: str, instruction: str):
+        """Handle final draft confirmation and auto character extraction"""
         self._is_final = True
         corrected = nlp_engine.process_prompt(
             LIGHT_CORRECTION_PROMPT.format(summary=current_summary)
         )
         self._last_llm_output = corrected
+        
+        # Auto-extract characters and store in session
+        if self.character_manager and self.session_id:
+            try:
+                characters = self.character_manager.extract_characters_from_summary(corrected)
+                if characters:
+                    self.character_manager.set_characters(self.session_id, characters)
+                    logger.info(f"Auto-extracted and stored {len(characters)} characters for session {self.session_id}")
+                    # Do NOT confirm here! Let the user confirm after editing in the UI.
+                    logger.info("Characters extracted and ready for editing. Please review and confirm the roster when ready.")
+                else:
+                    logger.warning("No characters were extracted from the summary")
+            except Exception as e:
+                logger.error(f"Error during character extraction and storage: {str(e)}")
         
         # Enhanced status message with animation and icon
         status = (
@@ -241,7 +251,6 @@ class SummaryRefinement:
             "✓ Final story outline confirmed!"
             "</div>"
         )
-        
         return (
             corrected,
             gr.update(value="", interactive=False),

@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Kira Ashwood",
+    "role": "protagonist",
+    "appearance": "A tall woman with short black hair, wearing a futuristic pilot suit with neon blue lines",
+    "booru_tags": "1girl, short black hair, futuristic suit, blue glowing lines, serious expression"
+  },
+  {
+    "name": "Taro Mizuki",
+    "role": "supporting character",
+    "appearance": "A teenage boy with spiky brown hair and a pair of green-tinted goggles on his forehead",
+    "booru_tags": "1boy, spiky brown hair, green goggles, open jacket, cheerful expression"
+  },
+  {
+    "name": "Mira Solenne",
+    "role": "antagonist",
+    "appearance": "A mysterious woman with flowing silver hair, dark lipstick, and a black cloak adorned with feathers",
+    "booru_tags": "1girl, silver hair, black cloak, feathered outfit, gothic style, glowing eyes"
+  },
+  {
+    "name": "Ravi Thorne",
+    "role": "mentor",
+    "appearance": "A middle-aged man with a mechanical arm, salt-and-pepper hair, and a long scarf",
+    "booru_tags": "1man, mechanical arm, salt and pepper hair, scarf, serious gaze, rugged look"
+  },
+  {
+    "name": "Ayaka Kisaragi",
+    "role": "protagonist's rival",
+    "appearance": "A graceful woman with violet eyes, twin braids, and a martial arts gi with red accents",
+    "booru_tags": "1girl, violet eyes, twin braids, martial arts gi, red trim, focused expression"
+  },
+  {
+    "name": "Eli Draven",
+    "role": "comic relief hacker",
+    "appearance": "A lanky guy with neon pink dyed hair, headphones around his neck, and a holographic keyboard strapped to his wrist",
+    "booru_tags": "1boy, neon pink hair, headphones, tech gear, holographic device, quirky grin"
+  },
+  {
+    "name": "Nyra",
+    "role": "mysterious observer",
+    "appearance": "A cloaked figure with glowing teal eyes, no visible mouth, and symbols etched into her hood",
+    "booru_tags": "1girl, glowing teal eyes, hooded cloak, magic runes, floating, ethereal presence"
+  }
+] 

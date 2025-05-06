@@ -1,0 +1,66 @@
+{
+  "session_id": "extracted_test_session",
+  "timestamp": "2025-05-06T16:59:49.497418",
+  "characters": [
+    {
+      "name": "Kira Ashwood",
+      "role": "protagonist",
+      "appearance": "A daring pilot, full of determination.",
+      "booru_tags": "pilot, determined, aerial combat, confident gaze, leather jacket",
+      "id": "a871848a-2670-4808-999d-0d9cc7bd0a7b",
+      "source": "LLM",
+      "confirmed": false
+    },
+    {
+      "name": "Ravi Thorne",
+      "role": "mentor",
+      "appearance": "Experienced and wise, a guiding figure.",
+      "booru_tags": "wise, experienced, graying hair, stern expression, intricate tattoos",
+      "id": "1d6a9ce5-4a7a-4c8c-8b50-2376b0921e98",
+      "source": "LLM",
+      "confirmed": false
+    },
+    {
+      "name": "Ayaka Kisaragi",
+      "role": "rival",
+      "appearance": "Competitive and skilled, always pushing Kira.",
+      "booru_tags": "competitive, skilled, intense gaze, short hair, sleek uniform",
+      "id": "1dbd37ec-cf73-4434-b5f1-550c0604a513",
+      "source": "LLM",
+      "confirmed": false
+    },
+    {
+      "name": "Mira Solenne",
+      "role": "antagonist",
+      "appearance": "Shadowy and mysterious, her motives unclear.",
+      "booru_tags": "shadowy, mysterious, dark clothing, calculating eyes, hidden agenda",
+      "id": "59b73fe5-6b23-4437-a82d-fc2159bae489",
+      "source": "LLM",
+      "confirmed": false
+    },
+    {
+      "name": "Eli Draven",
+      "role": "supporting",
+      "appearance": "A quirky hacker with a playful demeanor.",
+      "booru_tags": "hacker, quirky, messy hair, oversized glasses, playful smirk",
+      "id": "6fe55917-a4e3-4c32-992d-21b002214eb9",
+      "source": "LLM",
+      "confirmed": false
+    },
+    {
+      "name": "Nyra",
+      "role": "observer",
+      "appearance": "Cloaked and enigmatic, always watching.",
+      "booru_tags": "cloaked, enigmatic, hooded figure, obscured face, watchful",
+      "id": "bd53ab88-fb97-49a1-b783-bf5325358c48",
+      "source": "LLM",
+      "confirmed": false
+    }
+  ],
+  "metadata": {
+    "created_at": "2025-05-06T16:59:49.497418",
+    "last_updated": "2025-05-06T16:59:49.497418",
+    "confirmed": true,
+    "version": 2
+  }
+}

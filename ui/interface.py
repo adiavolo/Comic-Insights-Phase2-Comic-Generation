@@ -134,42 +134,6 @@ def create_plot_story_tab():
         
     return story_prompt, generate_story_btn, story_output, summary_editor
 
-def create_character_management_tab():
-    """Create the Character Management tab UI"""
-    logger = logging.getLogger('comic_insights.debug')
-    logger.debug("Initializing Character Management tab UI.")
-    with gr.Tab("Character Management"):
-        gr.Markdown("""
-        # Character Management
-        Manage your comic characters and their appearances.
-        """)
-        add_character_btn = gr.Button(
-            "Add New Character",
-            interactive=False
-        )
-        character_list = gr.Markdown(
-            """
-            | Character Name | Description | Appearance |
-            |---------------|-------------|------------|
-            | Coming Soon   | Feature in development | - |
-            """,
-            label="Character List"
-        )
-        gr.Markdown("""
-        You will be able to add character appearance details for prompt consistency.
-        """)
-        # Unique tips for Character Management
-        gr.Markdown("""
-        ---
-        **Tips:**
-        - Add each character with a unique name and role.
-        - Describe their appearance, personality, and relationships.
-        - Use consistent details for recurring characters.
-        - Update the roster as your story evolves.
-        """)
-        logger.info("Character Management tab UI initialized.")
-    return add_character_btn, character_list
-
 def create_interface():
     """Create and return the Gradio interface"""
     logger = logging.getLogger('comic_insights.debug')
@@ -179,6 +143,12 @@ def create_interface():
     session_id = session_mgr.create_session()
     status_logger.info(f"Session created with ID: {session_id}")
     
+    from backend.character_manager import CharacterManager
+    character_manager = CharacterManager()
+    # Use a string for the initial selected tab
+    extracted_summary = gr.State(value="")
+    extracted_characters = gr.State(value=[])
+
     with gr.Blocks(title="Comic Insights") as demo:
         gr.Markdown("""
         # Comic Insights
@@ -186,13 +156,46 @@ def create_interface():
         """)
         logger.debug("Main Comic Insights UI loaded.")
         
-        # Create tabs
-        with gr.Tabs():
+        with gr.Tabs(selected="Plot/Story Setup") as tabs:
             # Tab 1: Plot/Story Setup
-            story_prompt, generate_story_btn, story_output, summary_editor = create_plot_story_tab()
-            logger.debug("Plot/Story Setup tab added to UI.")
-            
-            # Tab 2: Image Generation & Editing (current implementation)
+            with gr.Tab("Plot/Story Setup"):
+                from .components.story_tab import StoryTab
+                from .components.summary_refinement import SummaryRefinement
+                story_tab = StoryTab()
+                story_prompt, generate_story_btn, story_output = story_tab.create()
+                summary_refinement = SummaryRefinement(character_manager=character_manager, session_id=session_id)
+                summary_editor, instruction_input, refine_btn, confirm_btn, status_message, proceed_btn = summary_refinement.create()
+                story_notify = gr.Markdown(visible=True)
+                gr.Markdown("""
+                ---
+                **Tips:**
+                - Start with a clear summary of your comic's plot or scene.
+                - Include main characters and their motivations.
+                - Mention the setting and any important background details.
+                - Keep your description concise but vivid for best results.
+                - Use the refinement tools to polish your story summary.
+                """)
+                story_tab.attach_handlers()
+                summary_refinement.attach_handlers()
+                def update_summary_and_editor(user_input):
+                    summary, _ = story_tab._generate_initial_summary(user_input)
+                    summary_refinement._skip_next_change = True
+                    return summary, summary
+                generate_story_btn.click(
+                    fn=update_summary_and_editor,
+                    inputs=[story_prompt],
+                    outputs=[story_output, summary_editor]
+                )
+                # Proceed button handler: update extracted_summary and show message
+                def proceed_to_character_management(summary):
+                    return summary, "Now click the 'Character Management' tab to continue."
+                proceed_status = gr.Markdown(visible=False)
+                proceed_btn.click(
+                    fn=proceed_to_character_management,
+                    inputs=[summary_editor],
+                    outputs=[extracted_summary, proceed_status]
+                )
+            # Tab 2: Image Generation & Editing
             with gr.Tab("Image Generation & Editing"):
                 logger.debug("Initializing Image Generation & Editing tab UI.")
                 with gr.Row():
@@ -250,7 +253,6 @@ def create_interface():
                             info="Optional: Add things you don't want in the image."
                         )
                         generate_btn = gr.Button("Generate Comic", elem_id="generate-btn")
-                    
                     with gr.Column():
                         gr.Markdown("## Output & History")
                         payload_display = gr.Textbox(
@@ -269,9 +271,7 @@ def create_interface():
                             interactive=True,
                             info="View your previous generations in this session."
                         )
-                        
                         export_btn = gr.Button("Export Session", elem_id="export-btn")
-                # Unique tips for Image Generation & Editing
                 gr.Markdown("""
                 ---
                 **Tips:**
@@ -281,23 +281,29 @@ def create_interface():
                 - For best results, keep dimensions under 1536px.
                 """)
                 logger.info("Image Generation & Editing tab UI initialized.")
-            
             # Tab 3: Character Management
-            add_character_btn, character_list = create_character_management_tab()
-            logger.debug("Character Management tab added to UI.")
-        
+            with gr.Tab("Character Management"):
+                from ui.character_tab import CharacterTab
+                character_tab = CharacterTab(character_manager)
+                character_tab.set_session(session_id)
+                # Only display/edit characters already in the session
+                ui = character_tab.create_ui()
+                # Set the session_id textbox value to the current session_id
+                for component in ui.children:
+                    if hasattr(component, 'label') and getattr(component, 'label', None) == 'Session ID':
+                        component.value = session_id
+                ui.render()
+                logger.debug("Character Management tab added to UI.")
         # Set up event handlers for image generation tab
         logger.debug("Setting up event handlers for image generation tab.")
         generate_btn.click(
             fn=generate_comic,
-            inputs=[prompt, style_name, cfg_scale, negative_prompt, aspect_ratio_name, custom_dim, dim_type, custom_styles, gr.State(session_id)],
+            inputs=[prompt, style_name, cfg_scale, negative_prompt, aspect_ratio_name, custom_dim, dim_type, custom_styles, gr.State(value=session_id)],
             outputs=[payload_display, image, history]
         )
-        
         export_btn.click(
             fn=lambda: session_mgr.export_session(session_id),
             outputs=gr.File(label="Exported Session")
         )
         logger.info("Comic Insights UI fully initialized and ready.")
-    
     return demo 
